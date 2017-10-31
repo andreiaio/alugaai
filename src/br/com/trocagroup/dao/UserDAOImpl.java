@@ -1,6 +1,8 @@
 package br.com.trocagroup.dao;
 
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -25,13 +27,39 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User login(String email, String password) {
-		String query = String.format("from User WHERE email=%s and password=%s", email,password);
+		String query = "from User u WHERE u.email=:email and u.password=:password";
+		System.out.println("queeeeeeeeeeeeeeeery:   "+ query);
 		Session session = this.sessionFactory.openSession();
-		User user = (User) session.createQuery(query).uniqueResult();
+		User user = (User) session.createQuery(query)
+				.setParameter("email", email)
+				.setParameter("password", password)
+				.uniqueResult();
 		return user;
 	}
 
+	@Override
+	public void update(User p) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public List<User> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 
 //	@SuppressWarnings("unchecked")
 //	@Override
