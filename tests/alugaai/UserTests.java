@@ -10,7 +10,7 @@ import br.com.trocagroup.model.User;
 
 public class UserTests {
 	User userValid = new User("Joao da Silva","joaosilva@gmail.com","123123","11900000000","12345678","av sao joao, 123","centro","São Paulo","SP","12312312312");
-	User userInvalid = new User("1231 123123 ","joaosilva","","","12348","","","","RQ","123");
+	User userInvalid = new User("123 123","joaosilva","","","12348","","","","RQ","123");
 
 	@Test
 	public void checkFullName() {

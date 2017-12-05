@@ -30,6 +30,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>br.com.trocagroup.model.User</value>
+				<value>br.com.trocagroup.model.Item</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -42,6 +43,11 @@
 	</bean>
 
 	<bean id="userDAO" class="br.com.trocagroup.dao.UserDAOImpl">
+		<property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="itemDAO" class="br.com.trocagroup.dao.ItemDAOImpl">
 		<property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</bean>

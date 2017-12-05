@@ -1,6 +1,7 @@
 package br.com.trocagroup.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.trocagroup.util.Utils;
 
@@ -29,9 +31,20 @@ public class User {
 	private String bairro;
 	private String estado;
 	private String cpf;
+	
+	@Transient
+	private List<Item> meusItens;
+	
+	@Transient
+	private List<Item> itens;
+	
+	@Transient
+	private List<Item> itensQueAloquei;
+	
+	
+	
+	
 
-	
-	
 	public User(String name, String email, String password, String celular, String cep, String endereco, String cidade,
 			String bairro, String estado, String cpf) {
 		super();
@@ -48,6 +61,13 @@ public class User {
 	}
 
 	public User() {
+	}
+
+
+
+	
+	public int getId() {
+		return id;
 	}
 
 	public void setId(int id) {
@@ -134,10 +154,22 @@ public class User {
 		this.cpf = cpf;
 	}
 
-	public int getId() {
-		return id;
+	public List<Item> getItens() {
+		return itens;
 	}
-	
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+
+	public List<Item> getItensQueAloquei() {
+		return itensQueAloquei;
+	}
+
+	public void setItensQueAloquei(List<Item> itensQueAloquei) {
+		this.itensQueAloquei = itensQueAloquei;
+	}
+
 	public boolean isEmailValid(){
 		return Utils.validate(this.email, Utils.VALID_EMAIL_REGEX);
 	}
@@ -194,6 +226,14 @@ public class User {
 		return states.contains(this.estado);
 	}
 	
+
+	public List<Item> getMeusItens() {
+		return meusItens;
+	}
+
+	public void setMeusItens(List<Item> meusItens) {
+		this.meusItens = meusItens;
+	}
 
 	@Override
 	public String toString() {

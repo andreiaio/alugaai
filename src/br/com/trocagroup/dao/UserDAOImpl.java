@@ -28,12 +28,12 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User login(String email, String password) {
 		String query = "from User u WHERE u.email=:email and u.password=:password";
-		System.out.println("queeeeeeeeeeeeeeeery:   "+ query);
 		Session session = this.sessionFactory.openSession();
 		User user = (User) session.createQuery(query)
 				.setParameter("email", email)
 				.setParameter("password", password)
 				.uniqueResult();
+		session.close();
 		return user;
 	}
 

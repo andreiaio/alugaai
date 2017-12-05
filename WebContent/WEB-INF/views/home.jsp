@@ -45,10 +45,10 @@
 					<li><a href="#contact">Contato</a></li>
 				</ul>
 				
-				<c:if test="${not empty message}">
+				<c:if test="${not empty sessionScope.user.getName()}">
 			<ul class="nav navbar-nav navbar-right">
         		<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Olá,${message}<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Olá, ${sessionScope.user.getName()}<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                           <li><a href="login">Sair</a></li>
                         </ul>
@@ -60,85 +60,101 @@
 		</div>
 	</nav>
 	
-	
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img class="first-slide" src="${images}/banner1.jpg" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Alugue o que precisar quando precisar</h1>
-            </div>
-          </div>
-        </div>
-        <div class="item ">
-              <img class="first-slide" src="${images}/banner2.jpg" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Alugue o que precisar quando precisar</h1>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <img class="first-slide" src="${images}/banner3.jpg" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Alugue o que precisar quando precisar</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-	
-	
-<!-- 
-    <div class="jumbotron">
-      <div class="container">
-        <h2>Seja bem-vindo, ${message}!</h2>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
-    -->
-
     <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
+    <div class="well" style="margin-top:30px;">
+     <h1>Itens disponíveis para locação</h1> 
+      <c:if test="${not empty sessionScope.user.getItens()}">
+    	<div class="row">
+	   		<c:forEach items="${sessionScope.user.getItens()}" var="item">
+				<div class="col-md-4">
+		          <h3>${item.nome}</h3>
+		          <h4>De: <b>${item.nomeDono}</b></h4>
+		          <p>${item.descricao}</p>
+		      		    <form id="formAlugarItem" name="alugaritem" action="alugaritem" method="POST" >
+								<input type="hidden" name="codigo" value="${item.codigo}">
+								<input type="hidden" name="nome" value="${item.nome}">
+								<input type="hidden" name="descricao" value="${item.descricao}">
+								<input type="hidden" name="nomeDono" value="${item.nomeDono}">
+								<input type="hidden" name="codigoDono" value="${item.codigoDono}">
+							<button type="submit" class="btn btn-success">Alugar</button>	
+						</form>
+		          <p>
+		          
+        		</div>
+			</c:forEach>
+		</div>
+   	 </c:if>
+   
+   	 </div>
+        
+         <div class="well">
+     <h1>Itens que aloquei</h1> 
+     
+     
+      <c:if test="${not empty sessionScope.user.getItensQueAloquei()}">
+    	<div class="row">
+	   		<c:forEach items="${sessionScope.user.getItensQueAloquei()}" var="item">
+				<div class="col-md-4">
+		          <h3>${item.nome}</h3>
+		          <h4>De: <b>${item.nomeDono}</b></h4>
+		          <p>${item.descricao}</p>
+		          
+		           <form id="formDevolverItem" name="devolveritem" action="devolveritem" method="POST" >
+								<input type="hidden" name="codigo" value="${item.codigo}">
+								<input type="hidden" name="nome" value="${item.nome}">
+								<input type="hidden" name="descricao" value="${item.descricao}">
+								<input type="hidden" name="nomeDono" value="${item.nomeDono}">
+								<input type="hidden" name="codigoDono" value="${item.codigoDono}">
+							<button type="submit" class="btn btn-success">Devolver</button>	
+						</form>
+        		</div>
+			</c:forEach>
+		</div>
+   	 </c:if>
+   	
+   	 </div>	
+        
+        
+        
+        
+         <div class="well">
+    <h1>Meus itens  <a class="btn btn-success" id="btnNovoItem" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></h1>
+    
+    <form id="formNovoItem" style="display:none;" name="createitem" action="createitem" method="POST" >
+		<div class="form-group">
+			<label for="nome">Nome</label>
+			<input type="text" class="form-control" name="nome">
+		</div>
+		<div class="form-group">
+			<label for="descricao">Descrição</label>
+			<input type="text" class="form-control" name="descricao">
+		</div>
+		<button type="submit" class="btn btn-success">Adicionar Item</button>	
+		<a id="btnNovoItemCancelar" href="#" class="btn btn-danger">Cancelar</a>
+	</form>
+    
+    <c:if test="${not empty sessionScope.user.getMeusItens()}">
+    	<div class="row">
+	   		<c:forEach items="${sessionScope.user.getMeusItens()}" var="item">
+				<div class="col-md-4">
+		          <h3>${item.nome}</h3>
+		          <h4>
+		              <c:choose>
+			           		<c:when test="${empty item.nomeEmprestadoPara}">Disponível</c:when>
+	   						<c:otherwise>Alugado para: <b>${item.nomeEmprestadoPara}</b></c:otherwise> 
+		          	  </c:choose>
+		          </h4>
+		          <p>${item.descricao}</p>	          
+        		</div>
+			</c:forEach>
+		</div>
+    </c:if>
+   	
+    
+</div>
 
       <footer>
-        <p>&copy; 2016 Company, Inc.</p>
+        <p>&copy; 2017 Alugaí, Todos os direitos reservados.</p>
       </footer>
     </div> <!-- /container -->
 	
@@ -148,6 +164,20 @@
 	<spring:url value="/resources/js/bootstrap.js" var="bootstrapJS" />
 	<script src="${jquery}"></script>
 	<script src="${bootstrapJS}"></script>
+	
+	<script>
+		$(document).ready(function(){
+			$("#btnNovoItem").click(function(e){
+				e.preventDefault();
+				$("#formNovoItem").slideToggle();
+			});
+			
+			$("#btnNovoItemCancelar").click(function(e){
+				e.preventDefault();
+				$("#formNovoItem").slideToggle();
+			});
+		});
+	</script>
 
 </body>
 </html>
